@@ -1,7 +1,7 @@
 # Teste Sabion Formulario
 Este é o repositório do aplicativo Teste Sabion Formulario. Um formulário desenvolvido em Ionic para um Teste da empresa Sabion Digital.
 
-# Como instalar o projeto
+## Como instalar o projeto
 *Atenção:* para esse projeto funcionar, é necessário ter o [Node.js](https://nodejs.org/) instalado.
 ```bash
   # Instale o Cordova e o Ionic 
@@ -25,7 +25,7 @@ Este é o repositório do aplicativo Teste Sabion Formulario. Um formulário des
   $ ionic cordova build android
   ```
 
-# Dependências
+## Dependências
 O app utiliza os seguintes plugins de terceiros. Instruções de como utilizar cada um estão descritos nos links abaixo.
 
 | Package | Documentation |

@@ -1,0 +1,190 @@
+<ion-header>
+	<ion-navbar transparent color="primary">
+		<ion-title text-center>Meu Cartão</ion-title>
+		<ion-buttons end> <div class="profile-photo"></div> </ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding class="page-form">
+	<h3 text-center class="page-description">
+		Insira seus dados para gerar seu cartão de visitas
+	</h3>
+
+	<ion-card class="form-card">
+		<ion-card-content>
+			<form
+				[formGroup]="signUpForm"
+				(ngSubmit)="onSubmit(); $event.preventDefault()"
+			>
+				<div class="personal-info">
+					<div class="group-items">
+						<div class="photo-card"><div></div></div>
+						<div class="form-elements">
+							<ion-item class="form-group">
+								<ion-label floating>Nome *</ion-label>
+								<ion-input
+									type="text"
+									formControlName="Nome"
+								></ion-input>
+							</ion-item>
+
+							<ion-item class="form-group">
+								<ion-label floating>Sobrenome *</ion-label>
+								<ion-input
+									type="text"
+									formControlName="Sobrenome"
+								></ion-input>
+							</ion-item>
+						</div>
+					</div>
+					<div class="checkbox-wrappper">
+						<ion-item class="form-group-checkbox">
+							<ion-label>Usar foto de perfil</ion-label>
+							<ion-checkbox
+								color="light"
+								checked="true"
+								formControlName="FotoPerfil"
+							></ion-checkbox>
+						</ion-item>
+					</div>
+				</div>
+				<div class="secondary-info">
+					<ion-grid>
+						<ion-row>
+							<ion-col col-12>
+								<ion-item class="form-group">
+									<ion-label floating
+										>Endereço Comercial *</ion-label
+									>
+									<ion-input
+										type="text"
+										formControlName="Endereco"
+									></ion-input>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+						<ion-row>
+							<ion-col col-5>
+								<ion-item class="form-group">
+									<ion-label floating>Número *</ion-label>
+									<ion-input
+										type="number"
+										formControlName="EnderecoNumero"
+									></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col col-7>
+								<ion-item class="form-group">
+									<ion-label floating>Complemento</ion-label>
+									<ion-input
+										type="text"
+										formControlName="EnderecoComplemento"
+									></ion-input>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+						<ion-row>
+							<ion-col col-5>
+								<ion-item class="form-group">
+									<ion-label floating>CEP *</ion-label>
+									<ion-input
+										type="tel"
+										[brmasker]="{
+											mask: '00000-000',
+											len: 9,
+											type: 'num'
+										}"
+										maxlength="9"
+										formControlName="EnderecoCep"
+									></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col col-4>
+								<ion-item class="form-group">
+									<ion-label floating>Cidade *</ion-label>
+									<ion-input
+										type="text"
+										formControlName="EnderecoCidade"
+									></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col col-3>
+								<ion-item class="form-group">
+									<ion-label floating>UF *</ion-label>
+									<ion-input
+										type="text"
+										maxlength="2"
+										formControlName="EnderecoUf"
+									></ion-input>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+						<ion-row>
+							<ion-col col-5>
+								<ion-item class="form-group">
+									<ion-label floating
+										>Tel. Comercial *</ion-label
+									>
+									<ion-input
+										type="tel"
+										[brmasker]="{
+											mask: '(00) 0000-0000',
+											len: 14,
+											type: 'num'
+										}"
+										maxlength="14"
+										formControlName="TelefoneComercial"
+									></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col col-7>
+								<ion-item class="form-group">
+									<ion-label floating>Tel. Celular</ion-label>
+									<ion-input
+										type="tel"
+										[brmasker]="{
+											mask: '(00) 00000-0000',
+											len: 15,
+											type: 'num'
+										}"
+										maxlength="15"
+										formControlName="TelefoneCelular"
+									></ion-input>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+						<ion-row>
+							<ion-col col-12>
+								<ion-item class="form-group">
+									<ion-label floating>E-mail *</ion-label>
+									<ion-input
+										type="email"
+										formControlName="Email"
+									></ion-input>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
+				</div>
+				<ion-grid>
+					<ion-row class="row-submit">
+						<ion-col col-7>
+							<p class="warning">* Campos Obrigatórios</p>
+						</ion-col>
+						<ion-col col-5 text-right>
+							<button
+								ion-button
+								color="light"
+								type="submit"
+								outline
+								[disabled]="signUpForm.invalid"
+							>
+								Gerar
+							</button>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</form>
+		</ion-card-content>
+	</ion-card>
+</ion-content>

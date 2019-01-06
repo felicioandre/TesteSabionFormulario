@@ -1,0 +1,127 @@
+$photo-profile-example: "/assets/imgs/photo-profile.jpg";
+
+page-form-business-card {
+	//Cor de Background
+	.page-form {
+		background-color: #3a4071;
+		color: #fff;
+	}
+	//Mensagem de introdução na página
+	.page-description {
+		max-width: 360px;
+		margin: 20px auto 30px !important;
+		font-weight: 300;
+	}
+	//Diminuição do espaçamento lateral do grid
+	.profile-photo {
+		width: 30px;
+		height: 30px;
+		background: url($photo-profile-example) no-repeat center center;
+		background-size: cover;
+		border-radius: 50%;
+		margin: 0 6px;
+	}
+	//Fundo escuro do card do formulário
+	.form-card {
+		background-color: rgba(#000, 0.15);
+		margin: 12px 0;
+		width: 100%;
+	}
+	//Estilos dos inputs do formulário
+	.form-group {
+		background-color: rgba(#fff, 0.15);
+		border-radius: 2px;
+		padding-left: 10px;
+
+		//Estilos do floating label
+		.label {
+			color: rgba(#fff, 0.75);
+			margin-right: 0;
+		}
+		&.item-input-has-focus {
+			background-color: rgba(#fff, 0.25);
+
+			.label {
+				color: #efefef;
+			}
+		}
+		//Estilos do input
+		.item-inner {
+			border-bottom: 0;
+			box-shadow: none !important;
+		}
+		.text-input {
+			color: #fff;
+		}
+		//Estilos do checkbox
+		&-checkbox {
+			background-color: transparent;
+			color: #fff;
+			padding-left: 0;
+			width: 60%;
+
+			.checkbox-md {
+				margin-right: 12px !important;
+			}
+
+			.item-inner {
+				padding-right: 0 !important;
+			}
+		}
+	}
+	// separação dentro do form
+	.personal-info {
+		border-bottom: 1px solid rgba(#fff, 0.6);
+	}
+	//Grid personalizado para a foto e os campos nome e sobrenome
+	.group-items {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		.photo-card {
+			flex-basis: 40%;
+			padding-right: 10px;
+			> div {
+				width: 100%;
+				background: url($photo-profile-example) no-repeat center center;
+				background-size: cover;
+				border-radius: 50%;
+				max-width: 160px;
+				margin: 0 auto;
+				min-width: 70px;
+				//Foto "quadrada" responsiva
+				&:after {
+					padding-top: 100%;
+					display: block;
+					content: "";
+				}
+			}
+		}
+		.form-elements {
+			flex-basis: 60%;
+
+			.form-group {
+				margin-bottom: 15px;
+			}
+		}
+	}
+	//Alinhamento do checkbox a direita
+	.checkbox-wrappper {
+		display: flex;
+		justify-content: flex-end;
+	}
+	//Diminuição do espaçamento lateral do grid
+	.secondary-info {
+		margin: 0 -10px;
+	}
+	//aviso de campos obrigatorios
+	.warning {
+		color: #fff;
+		margin: 0;
+		font-size: 13px;
+	}
+	//deixando o aviso e o botao alinhados
+	.row-submit {
+		align-items: center;
+	}
+}

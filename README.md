@@ -6,6 +6,7 @@ Este é o repositório do aplicativo Teste Sabion Formulario. Um formulário des
 ```bash
   # Instale o Cordova e o Ionic 
   $ npm install -g cordova ionic
+  -----
   # Clone o repositório	
   $ git clone https://github.com/felicioandre/TesteSabionFormulario
   -----

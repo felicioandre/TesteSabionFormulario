@@ -83,9 +83,10 @@ page-form-business-card {
 			padding-right: 10px;
 			> div {
 				width: 100%;
-				background: url($photo-profile-example) no-repeat center center;
 				background-size: cover;
 				border-radius: 50%;
+				background-repeat: no-repeat;
+				background-position: center center;
 				max-width: 160px;
 				margin: 0 auto;
 				min-width: 70px;
@@ -95,6 +96,14 @@ page-form-business-card {
 					display: block;
 					content: "";
 				}
+
+				.inactive &{
+					//background: url($photo-profile-example) no-repeat center center;
+				}
+			}
+
+			&.inactive > div{
+				background-image: url($photo-profile-example);
 			}
 		}
 		.form-elements {

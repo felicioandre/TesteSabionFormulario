@@ -1,5 +1,8 @@
 import { Component } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Camera, CameraOptions } from "@ionic-native/camera";
+import { Storage } from "@ionic/storage";
+
 import {
 	NavController,
 	NavParams,
@@ -14,13 +17,15 @@ import {
 export class FormBusinessCardPage {
 	//Declaração da propriedade agrupadora dos models do formulário
 	signUpForm: FormGroup;
-
+	imageProfile: string = null;
 	constructor(
 		private alertCtrl: AlertController,
+		private camera: Camera,
+		private storage: Storage,
 		public actionSheetCtrl: ActionSheetController,
 		public formBuilder: FormBuilder,
 		public navCtrl: NavController,
-		public navParams: NavParams
+		public navParams: NavParams,
 	) {
 		//Variáveis de padrao regex para validações de telefone e cep
 		let phoneRegex = /^[\+]?[(]?[0-9]{2}[)]?[-\s\.]?[0-9]{4,5}[-\s\.]?[0-9]{4}$/im;
@@ -56,6 +61,13 @@ export class FormBusinessCardPage {
 				Validators.compose([Validators.required, Validators.email])
 			]
 		});
+
+		//verifica se existe alguma imagem armazenada e, se positivo, insere a imagem na variavel
+		this.storage.get("imageProfile").then(val => {
+			if (val != null) {
+				this.imageProfile = val;
+			}
+		});
 	}
 
 	//Função executada no envio do formulário
@@ -77,43 +89,59 @@ export class FormBusinessCardPage {
 	onUploadPhoto(): void {
 		console.log("start actionsheet");
 
-		let showExcluir: boolean = this.signUpForm.controls['FotoPerfil'].value;
+		//variável que verifica se existe uma imagem carregada
+		let showExcluir: boolean = this.imageProfile !== null;
 
-		//variável com configuração do action sheet
+		//variável com configuração inicial do action sheet
 		let actionSheet = this.actionSheetCtrl.create({
-			title: "Alterar foto de perfil",
+			title: "Foto de perfil",
 			buttons: [
-			  {
-				text: 'TIRAR FOTO',
-				icon: "camera",
-				handler: () => {
-				  console.log('TIRAR clicked');
+				{
+					text: "TIRAR FOTO",
+					icon: "camera",
+					handler: () => {
+						console.log("TIRAR FOTO clicked");
+
+						//this.lastImage = "https://abrilexame.files.wordpress.com/2018/10/8dicas1.jpg?quality=70&strip=info&w=1000&h=1000";
+
+						//this.storage.set("imageProfile", this.lastImage);
+
+						this.takePicture(this.camera.PictureSourceType.CAMERA);
+					}
+				},
+				{
+					text: "GALERIA",
+					icon: "image",
+					handler: () => {
+						console.log("GALERIA clicked");
+
+						this.takePicture(
+							this.camera.PictureSourceType.PHOTOLIBRARY
+						);
+					}
 				}
-			  },
-			  {
-				text: 'GALERIA',
-				icon: "image",
-				handler: () => {
-				  console.log('GALERIA clicked');
-				}
-			  }
 			]
 		});
 
-
-		if(showExcluir){
+		//adiciona o botão excluir foto se tiver uma foto carregada
+		if (showExcluir) {
 			actionSheet.addButton({
-				text: 'EXCLUIR FOTO',
+				text: "EXCLUIR FOTO",
 				icon: "trash",
-				role: 'destructive',
+				role: "destructive",
 				handler: () => {
-				  console.log('EXCLUIR clicked');
+					//altera a variavel da imagem para ficar vazia novamente
+					this.imageProfile = null;
+
+					//remove do storage o valor da imagem armazenada
+					this.storage.remove("imageProfile");
+
+					console.log("EXCLUIR clicked");
 				}
 			});
 		}
 
-
-
+		//adiciona o botão cancelar depois de tudo, pra ficar na ordem correta
 		actionSheet.addButton({
 			text: "CANCELAR",
 			icon: "close",
@@ -123,20 +151,35 @@ export class FormBusinessCardPage {
 		actionSheet.present();
 	}
 
-	createButtons() {
-		let buttons = [];
+	takePicture(sourceType): any {
+		console.log("takePicture", sourceType);
 
-		/*for (var index in this.possibleButtons) {
-		  let button = {
-			text: this.possibleButtons[index].text,
-			icon: this.possibleButtons[index].icon,
-			handler: () => {
-			  console.log('setting icon ' + this.possibleButtons[index].icon);
-			  return true;
+		//Opcoes da camera/galeria
+		const options: CameraOptions = {
+			quality: 30,
+			destinationType: this.camera.DestinationType.DATA_URL,
+			encodingType: this.camera.EncodingType.JPEG,
+			mediaType: this.camera.MediaType.PICTURE,
+			sourceType: sourceType,
+			saveToPhotoAlbum: false,
+			correctOrientation: true
+		};
+
+		//Base 64 gerado do plugin da camera
+		this.camera.getPicture(options).then(
+			imagePath => {
+
+				//Definição de valor da variavel da imagem
+				this.imageProfile = 'data:image/jpeg;base64,' + imagePath;
+				console.log('imagePath', imagePath);
+				console.log('base64Image', this.imageProfile);
+
+				//Salvar no storage do device
+				this.storage.set("imageProfile", this.imageProfile);
+			},
+			err => {
+				console.log("error", err);
 			}
-		  }
-		  buttons.push(button);
-		}*/
-		return buttons;
+		);
 	}
 }
